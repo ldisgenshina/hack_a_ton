@@ -18,5 +18,11 @@
   "homepage": "https://github.com/ldisgenshina/hack_a_ton#readme",
   "dependencies": {
     "js-yaml": "^4.2.0"
+  },
+  "devDependencies": {
+    "openapi-typescript-codegen": "^0.30.0"
+  },
+  "scripts": {
+  "generate:api": "openapi --input ./hack_ujin_2026_openapi.yaml --output ./src/api"
   }
 }
