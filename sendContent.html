@@ -4,15 +4,16 @@
     <meta charset="utf-8">
     <title>Панель управление УК</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js"></script>
   </head>
   <body>
     <header>
         <div class="menu">
             <a>Панель управление УК</a>
-            <button>Создание шаблонов</button>
-            <button>Управление экранами</button>
-            <button>Отправка контента</button>
-            <button>Активация режима ЧС</button>
+            <button id="addTemplateButton">Создание шаблонов</button>
+            <button id="editScreenButton">Управление экранами</button>
+            <button id="sendContentButton">Отправка контента</button>
+            <button onclick="onEmergency()">Активация режима ЧС</button>
         </div>
     </header>
     <main>
@@ -34,6 +35,31 @@
         </div>
       </fieldset>
       <button>Отправить</button>
+      <div id="overlay-page">
+        <div>
+          <h2>Активация режима ЧС</h2>
+          <fieldset>
+            <legend>Выбрать экраны для отправки контента:</legend>
+            <div>
+              <input type="radio" id="allSelectEmergency" name="selectScreenEmergency" value="allSelectEmergency" checked/>
+              <label for="allSelectEmergency">Все</label>
+            </div>
+            <div>
+              <input type="radio" id="anySelectEmergency" name="selectScreenEmergency" value="anySelectEmergency" />
+              <label for="anySelectEmergency">Несколько</label>
+              <div class="listScreen" id="anyScreenSelectEmergency">ТУТ БУДЕТ СПИСОК ВЫБОРА ЭКРАНОВ</div>
+            </div>
+            <div>
+              <input type="radio" id="oneSelectEmergency" name="selectScreenEmergency" value="oneSelectEmergency" />
+              <label for="oneSelectEmergency">Один</label>
+              <div class="listScreen" id="oneScreenSelectEmergency">ТУТ БУДЕТ СПИСОК ВЫБОРА ЭКРАНА</div>
+            </div>
+          </fieldset>
+          <button>Активировать</button>
+          <button>Сбросить</button>
+          <button onclick="onEmergencyCancel()">Отмена</button>
+        </div>
+      </div>
     </main>
     <footer></footer>
   </body>
