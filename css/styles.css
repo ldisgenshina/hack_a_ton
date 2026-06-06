@@ -27,3 +27,14 @@ input[value="anySelect"]:checked ~ #anyScreenSelect,
 input[value="oneSelect"]:checked ~ #oneScreenSelect {
   display: block;
 }
+body{
+    width: 1200px;
+}
+
+#canvas_template {
+    border: 10px solid #000000;
+    /* height: 675px;
+    width: max-content; */
+    height: 500px;
+    width: 500px;
+}
