@@ -29,6 +29,7 @@ input[value="anySelectEmergency"]:checked ~ #anyScreenSelectEmergency,
 input[value="oneSelectEmergency"]:checked ~ #oneScreenSelectEmergency {
   display: block;
 }
+<<<<<<< HEAD
 #overlay-page {
     position: fixed;
     top: 0;
@@ -40,4 +41,16 @@ input[value="oneSelectEmergency"]:checked ~ #oneScreenSelectEmergency {
     display: none;
     justify-content: center;
     align-items: center;
+=======
+body{
+    width: 1200px;
+}
+
+#canvas_template {
+    border: 10px solid #000000;
+    /* height: 675px;
+    width: max-content; */
+    height: 500px;
+    width: 500px;
+>>>>>>> fe3cb3072ca1d68b4e6d5d04c8ed25e963e12da7
 }
