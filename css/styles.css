@@ -1,0 +1,15 @@
+.menu{
+    display:flex;
+    justify-content: center;
+    border: 2px black solid;
+}
+.menu button {
+    margin: 5px;
+    border: 1px black solid;
+    font-size: 20px;
+}
+.menu a {
+    margin: 5px;
+    font-size: 28px;
+    margin-right: 100px;
+}
