@@ -1,0 +1,117 @@
+# .NET build artifacts
+bin/
+obj/
+out/
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio files
+.vs/
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+*.swp
+*.sln.ide
+*.ide
+
+# VS Code specific
+.history/
+*.code-workspace
+
+# Entity Framework migration files (optional - commit if needed)
+# Migrations/*.Designer.cs
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.mdf
+*.ldf
+*.ndf
+
+# Log files
+*.log
+logs/
+Logs/
+
+# Diagnostics
+*.etl
+*.etlx
+
+# Node.js (if you use npm/gulp/webpack)
+node_modules/
+lib/
+package-lock.json
+yarn.lock
+
+# IDE - JetBrains Rider
+.idea/
+*.sln.iml
+
+# Publish profiles
+Properties/PublishProfiles/*.pubxml
+*.pubxml.user
+
+# Backup & temp files
+*~
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.dll
+*.exe
+*.pdb
+*.cache
+
+# Global Tool Store
+.dotnet-tools.json
+.nupkg
+
+# Code coverage
+coverage/
+coverage.json
+*.coverage
+*.coverage.xml
+*.coverlet.json
+
+# Docker (if you use it)
+.dockerignore
+*.dockerfile.user
+
+# Secrets & sensitive data
+*.pfx
+*.p12
+secrets.json
+appsettings.*.Local.json
+*.secrets.json

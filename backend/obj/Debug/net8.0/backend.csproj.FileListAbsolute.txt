@@ -1,0 +1,8 @@
+/home/user15/Documents/hakaton/hack_a_ton/backend/obj/Debug/net8.0/backend.csproj.AssemblyReference.cache
+/home/user15/Documents/hakaton/hack_a_ton/backend/obj/Debug/net8.0/backend.GeneratedMSBuildEditorConfig.editorconfig
+/home/user15/Documents/hakaton/hack_a_ton/backend/obj/Debug/net8.0/backend.AssemblyInfoInputs.cache
+/home/user15/Documents/hakaton/hack_a_ton/backend/obj/Debug/net8.0/backend.AssemblyInfo.cs
+/home/user15/Documents/hakaton/hack_a_ton/backend/obj/Debug/net8.0/backend.csproj.CoreCompileInputs.cache
+/home/user15/Documents/hakaton/hack_a_ton/backend/obj/Debug/net8.0/backend.MvcApplicationPartsAssemblyInfo.cs
+/home/user15/Documents/hakaton/hack_a_ton/backend/obj/Debug/net8.0/backend.MvcApplicationPartsAssemblyInfo.cache
+/home/user15/Documents/hakaton/hack_a_ton/backend/obj/Debug/net8.0/backend.sourcelink.json
