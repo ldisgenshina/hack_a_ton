@@ -1,3 +1,6 @@
+*{
+    font-size: 16px;
+}
 .menu{
     display:flex;
     justify-content: center;
@@ -5,11 +8,22 @@
 }
 .menu button {
     margin: 5px;
-    border: 1px black solid;
     font-size: 20px;
 }
 .menu a {
     margin: 5px;
     font-size: 28px;
     margin-right: 100px;
+}
+.main{
+    display: flex;
+    justify-content: center;
+}
+.listScreen {
+  display: none;
+  margin-top: 5px;
+}
+input[value="anySelect"]:checked ~ #anyScreenSelect,
+input[value="oneSelect"]:checked ~ #oneScreenSelect {
+  display: block;
 }
