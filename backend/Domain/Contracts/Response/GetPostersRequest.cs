@@ -7,6 +7,6 @@ namespace backend.Domain.Contracts.Response
 {
     public class GetPostersResponse
     {
-        public required List<byte[]> Images {get; set;}
+        public required List<string> Images {get; set;}
     }
 }
