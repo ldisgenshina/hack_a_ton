@@ -41,6 +41,9 @@ input[value="oneSelectEmergency"]:checked ~ #oneScreenSelectEmergency {
     justify-content: center;
     align-items: center;
 }
+body{
+    width: 1200px;
+}
 #canvas_template {
     border: 10px solid #000000;
     /* height: 675px;
