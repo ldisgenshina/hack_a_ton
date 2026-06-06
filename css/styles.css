@@ -1,5 +1,12 @@
 *{
     font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 1200px;
+    border: 1px solid #000000;
+    margin: 0 auto;
 }
 .menu{
     display:flex;
@@ -44,10 +51,7 @@ input[value="oneSelectEmergency"]:checked ~ #oneScreenSelectEmergency {
 body{
     width: 1200px;
 }
+
 #canvas_template {
-    border: 10px solid #000000;
-    /* height: 675px;
-    width: max-content; */
-    height: 500px;
-    width: 500px;
+    border: 1px solid #000000;
 }
