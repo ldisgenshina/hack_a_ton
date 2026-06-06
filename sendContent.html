@@ -16,7 +16,7 @@
             <button onclick="onEmergency()">Активация режима ЧС</button>
         </div>
     </header>
-    <main>
+    <main class="main">
       <fieldset>
         <legend>Выбрать экраны для отправки контента:</legend>
         <div>
@@ -33,8 +33,8 @@
           <label for="oneSelect">Один</label>
           <div class="listScreen" id="oneScreenSelect">ТУТ БУДЕТ СПИСОК ВЫБОРА ЭКРАНА</div>
         </div>
+        <button>Отправить</button>
       </fieldset>
-      <button>Отправить</button>
       <div id="overlay-page">
         <div>
           <h2>Активация режима ЧС</h2>
@@ -54,10 +54,10 @@
               <label for="oneSelectEmergency">Один</label>
               <div class="listScreen" id="oneScreenSelectEmergency">ТУТ БУДЕТ СПИСОК ВЫБОРА ЭКРАНА</div>
             </div>
+            <button>Активировать</button>
+            <button>Сбросить</button>
+            <button onclick="onEmergencyCancel()">Отмена</button>
           </fieldset>
-          <button>Активировать</button>
-          <button>Сбросить</button>
-          <button onclick="onEmergencyCancel()">Отмена</button>
         </div>
       </div>
     </main>
