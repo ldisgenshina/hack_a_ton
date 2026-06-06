@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         screenList.add(R.drawable.screen3);
         timer = new Timer();
         timer.schedule(imageChangeTimerTask,0,20000);
+        timerImage = new Timer();
+        timerImage.schedule(imageTimerTask,5,5000);
     }
     TimerTask imageChangeTimerTask = new TimerTask() {
         @Override
@@ -46,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
                     if (addIV != null){
                         if (addIV.getVisibility() == View.INVISIBLE){
                             addIV.setVisibility(View.VISIBLE);
-                            timerImage = new Timer();
-                            timerImage.schedule(imageTimerTask,5,5000);
                         }
                         else {
                             addIV.setVisibility(View.INVISIBLE);
