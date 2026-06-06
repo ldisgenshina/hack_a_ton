@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
     <title>Document</title>
 </head>
+<header>
+    <div class="menu">
+            <a>Панель управление УК</a>
+            <button onclick="document.location='create_template.html'">Создание шаблонов</button>
+            <button onclick="document.location='index.html'">Управление экранами</button>
+            <button onclick="document.location='sendContent.html'">Отправка контента</button>
+            <button onclick="onEmergency()">Активация режима ЧС</button>
+    </div>
+</header>
 <body>
-    <label id>sdf</label>
     <canvas id="canvas_template"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <script src="js/create_tamplate.js"></script>
