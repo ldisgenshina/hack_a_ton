@@ -1,3 +1,5 @@
+using System;
+
 namespace backend.Midleware.Services
 {
     public class ApiException : Exception
