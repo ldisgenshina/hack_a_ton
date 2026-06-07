@@ -7,12 +7,12 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using LiteDB;
 using backend.Domain.Context;
 using backend.Domain.Models.Tables;
 using System.ComponentModel.DataAnnotations;
 using backend.Domain.Enums;
 using System.Text;
+using LiteDB;
 
 namespace backend.Midleware.Services
 {

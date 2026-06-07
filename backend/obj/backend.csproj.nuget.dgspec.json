@@ -4,17 +4,17 @@
     "/home/user14/workflow/hack_a_ton/backend/backend.csproj": {}
   },
   "projects": {
-    "/home/user15/Documents/hakaton/hack_a_ton/backend/backend.csproj": {
+    "/home/user14/workflow/hack_a_ton/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/user15/Documents/hakaton/hack_a_ton/backend/backend.csproj",
+        "projectUniqueName": "/home/user14/workflow/hack_a_ton/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/home/user15/Documents/hakaton/hack_a_ton/backend/backend.csproj",
-        "packagesPath": "/home/user15/.nuget/packages/",
-        "outputPath": "/home/user15/Documents/hakaton/hack_a_ton/backend/obj/",
+        "projectPath": "/home/user14/workflow/hack_a_ton/backend/backend.csproj",
+        "packagesPath": "/home/user14/.nuget/packages/",
+        "outputPath": "/home/user14/workflow/hack_a_ton/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/user15/.nuget/NuGet/NuGet.Config"
+          "/home/user14/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
