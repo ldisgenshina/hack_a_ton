@@ -1,10 +1,10 @@
 # .NET build artifacts
 bin/
 obj/
-<<<<<<< HEAD
+
 *.user
 *.suo
-=======
+
 out/
 appsettings.Development.json
 appsettings.Production.json
@@ -119,4 +119,4 @@ coverage.json
 secrets.json
 appsettings.*.Local.json
 *.secrets.json
->>>>>>> 270cd0194b0b492f021dcf919e115b87b8095c87
+
