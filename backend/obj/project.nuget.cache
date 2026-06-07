@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "s8PEQ+WjyDq+mrD5dIiJlcqLijMk2VMDGskPTl2jE7Z1Yot1DWHVy+ZRyKwh6gkEL7DKlHusKw8K2ge5OdXw3g==",
+  "dgSpecHash": "z5fHA8ETyBVT4OBH3HQ336Tqhc+iksukuqOJVTLwzsPTnI5cLH76YcneKhWPr8PiLnQd5/W438MQUpitTRFaxA==",
   "success": true,
   "projectFilePath": "/home/user14/workflow/hack_a_ton/backend/backend.csproj",
   "expectedPackageFiles": [
     "/home/user14/.nuget/packages/litedb/5.0.21/litedb.5.0.21.nupkg.sha512",
+    "/home/user14/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/8.0.0/microsoft.aspnetcore.authentication.jwtbearer.8.0.0.nupkg.sha512",
     "/home/user14/.nuget/packages/microsoft.aspnetcore.openapi/8.0.27/microsoft.aspnetcore.openapi.8.0.27.nupkg.sha512",
     "/home/user14/.nuget/packages/microsoft.bcl.cryptography/10.0.2/microsoft.bcl.cryptography.10.0.2.nupkg.sha512",
     "/home/user14/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
@@ -13,6 +14,8 @@
     "/home/user14/.nuget/packages/microsoft.identitymodel.abstractions/8.19.1/microsoft.identitymodel.abstractions.8.19.1.nupkg.sha512",
     "/home/user14/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.19.1/microsoft.identitymodel.jsonwebtokens.8.19.1.nupkg.sha512",
     "/home/user14/.nuget/packages/microsoft.identitymodel.logging/8.19.1/microsoft.identitymodel.logging.8.19.1.nupkg.sha512",
+    "/home/user14/.nuget/packages/microsoft.identitymodel.protocols/7.0.3/microsoft.identitymodel.protocols.7.0.3.nupkg.sha512",
+    "/home/user14/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/7.0.3/microsoft.identitymodel.protocols.openidconnect.7.0.3.nupkg.sha512",
     "/home/user14/.nuget/packages/microsoft.identitymodel.tokens/8.19.1/microsoft.identitymodel.tokens.8.19.1.nupkg.sha512",
     "/home/user14/.nuget/packages/microsoft.openapi/1.6.14/microsoft.openapi.1.6.14.nupkg.sha512",
     "/home/user14/.nuget/packages/swashbuckle.aspnetcore/6.6.2/swashbuckle.aspnetcore.6.6.2.nupkg.sha512",

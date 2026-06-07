@@ -1,7 +1,10 @@
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using backend.Domain.Context;
+using backend.Domain.Models;
+using backend.Midleware.Interfaces;
+using backend.Midleware.Services;
 using Microsoft.IdentityModel.Tokens;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JwtSettingsTV>(builder.Configuration.GetSection("JwtSettingsTV"));
 builder.Services.Configure<JwtSettingsEmployee>(builder.Configuration.GetSection("JwtSettingsEmployee"));
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<DbContext>();
+builder.Services.AddScoped<IStorageService, StorageService>();
 
 // Получаю настройки токенизации
 var jwtSettingsEmployee = builder.Configuration.GetSection("JwtSettingsEmployee");
@@ -31,8 +36,8 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings["Issuer"],
-        ValidAudience = jwtSettings["Audience"],
+        ValidIssuer = jwtSettingsEmployee["Issuer"],
+        ValidAudience = jwtSettingsEmployee["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(secretKeyEmployee)
     };
 });
@@ -40,10 +45,6 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 // Добавляю контроллеры
 builder.Services.AddControllers();
-
-// Настройки для аутентификации
-var jwtSettingsEmployee = builder.Configuration.GetSection("JwtSettingsEmployee");
-var secretKeyEmployee = Encoding.UTF8.GetBytes(jwtSettingsEmployee["SecretKey"]!);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -61,26 +62,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
 // Добавляю https, аунтетификацию, авторизацию, мапы
 app.UseHttpsRedirection();
 app.UseAuthentication();
@@ -89,7 +70,3 @@ app.MapControllers();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
