@@ -7,7 +7,19 @@ body{
     width: 1200px;
     border: 1px solid #000000;
     margin: 0 auto;
+    background-color: #F5F5F5;
 }
+button{
+    border: 1px solid #ccc;
+    background: #6F9E7B;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 50px;
+}
+
+/* Header */
 .menu{
     display:flex;
     justify-content: center;
@@ -22,6 +34,8 @@ body{
     font-size: 28px;
     margin-right: 100px;
 }
+
+/* Main */
 .main{
     display: flex;
     justify-content: center;
@@ -50,10 +64,63 @@ input[value="oneSelectEmergency"]:checked ~ #oneScreenSelectEmergency {
     justify-content: center;
     align-items: center;
 }
-body{
-    width: 1200px;
+
+
+
+
+/* Страница с моделированием макета */
+#canvas_template {
+    display: block;
+    background-color: #CCCCCC;
+    border-radius: 8px;
 }
 
-#canvas_template {
-    border: 1px solid #000000;
+.canvas-instrument_panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 100px;
+}
+
+.canvas-instrument_panel-wrap_layer_change {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+/* Кнопки канваса */
+.canvas-instrument_panel-button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: #6F9E7B;
+    color: white;
+    font-weight: bold;
+    width: 200px;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 50px;
+}
+
+.canvas-instrument_panel-wrap_layer_change-button{
+    padding: 0 16px;
+    height: 22.5px;
+}
+
+.canvas-instrument_panel-button:hover {
+    background: #4D7A5B;
+}
+
+#delete_element{
+    background-color: #C75C5C;
+    margin-left: 30px;
+}
+
+#delete_element:hover{
+    background-color: #A84A4A;
+}
+
+#save_layout{
+    display: block;
+    margin: 50px auto 0 auto;
 }

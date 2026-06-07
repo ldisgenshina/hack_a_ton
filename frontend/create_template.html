@@ -16,7 +16,23 @@
     </div>
 </header>
 <body>
+         <button id="save_layout" class="canvas-instrument_panel-button">Сохранить макет</button>
+
+    <!-- Канвас для создания макетов -->
     <canvas id="canvas_template"></canvas>
+    <!-- Кнопки канваса -->
+    <div class="canvas-instrument_panel">
+        <button id="add_img" class="canvas-instrument_panel-button">Добавить изображение</button>
+        <button id="add_text" class="canvas-instrument_panel-button">Добавить текст</button>
+        <div class="canvas-instrument_panel-wrap_layer_change">
+            <button id="up_layer" class="canvas-instrument_panel-button canvas-instrument_panel-wrap_layer_change-button">Выше</button>
+            <button id="down_layer" class="canvas-instrument_panel-button canvas-instrument_panel-wrap_layer_change-button">Ниже</button>
+        </div>
+        <button id="delete_element" class="canvas-instrument_panel-button">Удалить элемент</button>
+    </div>
+    <!-- Сохранить макет -->
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <script src="js/create_tamplate.js"></script>
 </body>
