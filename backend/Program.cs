@@ -13,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JwtSettingsTV>(builder.Configuration.GetSection("JwtSettingsTV"));
 builder.Services.Configure<JwtSettingsEmployee>(builder.Configuration.GetSection("JwtSettingsEmployee"));
 builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<DbContext>();
+builder.Services.AddSingleton<DbContext>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStorageService, StorageService>();
 
 // Получаю настройки токенизации

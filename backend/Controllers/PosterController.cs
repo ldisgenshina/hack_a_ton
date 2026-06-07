@@ -43,12 +43,12 @@ namespace backend.Controllers
             }
         }
         [HttpGet]
-        [Route("{id}")]
+        [Route("id")]
         public async Task<IActionResult> GetPosterById(int posterId)
         {
             try
             {
-                string? id = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                //string? id = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 await _storageService.SendCanvas(posterId);
                 return Ok();
             }

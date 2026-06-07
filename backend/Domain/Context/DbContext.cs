@@ -29,7 +29,7 @@ namespace backend.Domain.Context
         public DbContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            PathToDatabase = configuration["PathToDatabase"] ?? "backend/Domain/Database";
+            PathToDatabase = _configuration["PathToDatabase"] ?? "backend/Domain/Database.Database.db";
             InisilizeDatabase(PathToDatabase);
         }
 
@@ -37,6 +37,14 @@ namespace backend.Domain.Context
 
         private static void InisilizeDatabase(string pathToDatabase)
         {
+            var directory = Path.GetDirectoryName(pathToDatabase);
+        
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+                Console.WriteLine($"Создана директория для БД: {directory}");
+            }
+
             using(LiteDatabase db = new LiteDatabase(pathToDatabase))
             {
                 var employees = db.GetCollection<Employee>("emplyees");
@@ -48,6 +56,10 @@ namespace backend.Domain.Context
 
                 devicePosters.EnsureIndex(dp => dp.DeviceId);
                 devicePosters.EnsureIndex(dp => dp.PosterId);
+                
+                employees.Insert(new Employee(){Id = 1, Login = "dima", Password = "123"});
+                employees.Insert(new Employee(){Id = 2, Login = "sergay", Password = "231"});
+                employees.Insert(new Employee(){Id = 3, Login = "alexey", Password = "321"});
 
                 db.Commit();
             }

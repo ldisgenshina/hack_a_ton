@@ -1,3 +1,4 @@
+
 // create_tamplate.js
 function onEmergency() {
     let emergencyPage = document.getElementById("overlay-page");
@@ -152,7 +153,7 @@ document.getElementById('delete_element').addEventListener('click', () => {
 // Создаём экземпляр экспортера
 const exporter = new CanvasExporter(canvas, {
     // Замени URL на адрес твоего сервера
-    apiEndpoint: 'http://localhost:3000/api/save-template',
+    apiEndpoint: 'http://localhost:5196/api/poster',
     headers: {
         'Content-Type': 'application/json'
     }
