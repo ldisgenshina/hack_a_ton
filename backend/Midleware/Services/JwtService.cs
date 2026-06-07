@@ -1,30 +1,31 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using backend.Domain.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Midleware.Services{
     // Интерфейс jwt сервисов
     public interface IJwtService{
-        string GenerateTokenForTV(int tvId);
-        string GenerateTokenForUser(int employeeId, string login);
+        string GenerateTokenForTV(string tvId);
+        string GenerateTokenForEmployee(string employeeId, string login);
     }
     // Сам сервис
-    public class JwtService{
+    public class JwtService : IJwtService{
         // Настройки токенов
         private readonly JwtSettings _jwtSettingsForTV;
         private readonly JwtSettings _jwtSettingsForEmployee;
 
         public JwtService(IOptions<JwtSettingsTV> jwtSettingsForTV, IOptions<JwtSettingsEmployee> jwtSettingsForEmployee){
-            _jwtSettings = jwtSettings;
-            _jwtSettingsForEmployee = jwtSettingsForEmployee;
+            _jwtSettingsForTV = jwtSettingsForTV.Value;
+            _jwtSettingsForEmployee = jwtSettingsForEmployee.Value;
         }
 
 
 
         // Генерация токена для телеков
-        public string GenerateTokenForTV(int tvId){
+        public string GenerateTokenForTV(string tvId){
             // Создание клаймов
             var claims = new[]
             {
@@ -40,7 +41,7 @@ namespace backend.Midleware.Services{
                 issuer: _jwtSettingsForTV.Issuer,
                 audience: _jwtSettingsForTV.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(_jwtSettingsForTV.ExpiryHours),
+                expires: DateTime.UtcNow.AddHours(_jwtSettingsForTV.ExpiredHours),
                 signingCredentials: creds
             );
 
@@ -49,11 +50,11 @@ namespace backend.Midleware.Services{
 
 
         // Генерация токена для пользователей
-        public string GenerateTokenForUser(int id, string login){
+        public string GenerateTokenForEmployee(string employeeId, string login){
             // Создание клаймов
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, employeeId.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, employeeId),
                 new Claim(ClaimTypes.Role, "Employee"),
                 new Claim(ClaimTypes.Name, login.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -66,7 +67,7 @@ namespace backend.Midleware.Services{
                 issuer: _jwtSettingsForEmployee.Issuer,
                 audience: _jwtSettingsForEmployee.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtSettingsForEmployee.ExpiryHours),
+                expires: DateTime.UtcNow.AddMinutes(_jwtSettingsForEmployee.ExpiredMinutes),
                 signingCredentials: creds
             );
 

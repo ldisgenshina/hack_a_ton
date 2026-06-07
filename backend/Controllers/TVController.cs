@@ -1,7 +1,11 @@
+using backend.Midleware.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace backend.Controllers{
-    public class TVController{
+    [Controller]
+    [Route("api/[controller]")]
+    public class TVController : ControllerBase{
         private readonly ILogger<TVController> _logger;
         private readonly IJwtService _jwtService;
 
@@ -15,7 +19,7 @@ namespace backend.Controllers{
         [ProducesResponseType(typeof(object), 200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Login(int id){
+        public async Task<IActionResult> Login(string id){
             // Надо ещё проверять уникальность id в базе!!!!!!!
             try{
                 string token = _jwtService.GenerateTokenForTV(id);
@@ -27,5 +31,6 @@ namespace backend.Controllers{
                 return StatusCode(500);
             }
         }
+        
     }
 }
