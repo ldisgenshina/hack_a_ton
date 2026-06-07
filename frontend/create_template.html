@@ -11,11 +11,11 @@
             <a>Панель управление УК</a>
             <button onclick="document.location='create_template.html'">Создание шаблонов</button>
             <button onclick="document.location='index.html'">Управление экранами</button>
-            <button onclick="document.location='sendContent.html'">Отправка контента</button>
             <button onclick="onEmergency()">Активация режима ЧС</button>
     </div>
 </header>
 <body>
+    <h1 class="thisPageName">Создание шаблонов</h1>
          <button id="save_layout" class="canvas-instrument_panel-button">Сохранить макет</button>
 
     <!-- Канвас для создания макетов -->
@@ -29,8 +29,34 @@
             <button id="down_layer" class="canvas-instrument_panel-button canvas-instrument_panel-wrap_layer_change-button">Ниже</button>
         </div>
         <button id="delete_element" class="canvas-instrument_panel-button">Удалить элемент</button>
+        <button onclick="onFullScreen()" class="canvas-instrument_panel-button">На полный экран</button>
     </div>
     <!-- Сохранить макет -->
+    <div id="overlay-page">
+        <div>
+          <h2>Активация режима ЧС</h2>
+          <fieldset>
+            <legend>Выбрать экраны для отправки контента:</legend>
+            <div>
+              <input type="radio" id="allSelect" name="selectScreen" value="allSelect" checked/>
+              <label for="allSelect">Все</label>
+            </div>
+            <div>
+              <input type="radio" id="anySelect" name="selectScreen" value="anySelect" />
+              <label for="anySelect">Несколько</label>
+              <div class="listScreen" id="anyScreenSelect">ТУТ БУДЕТ СПИСОК ВЫБОРА ЭКРАНОВ</div>
+            </div>
+            <div>
+              <input type="radio" id="oneSelect" name="selectScreen" value="oneSelect" />
+              <label for="oneSelect">Один</label>
+              <div class="listScreen" id="oneScreenSelect">ТУТ БУДЕТ СПИСОК ВЫБОРА ЭКРАНА</div>
+            </div>
+            <button>Активировать</button>
+            <button>Сбросить</button>
+            <button onclick="onEmergencyCancel()">Отмена</button>
+          </fieldset>
+        </div>
+      </div>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>

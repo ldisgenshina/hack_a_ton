@@ -9,6 +9,12 @@ body{
     margin: 0 auto;
     background-color: #F5F5F5;
 }
+.thisPageName{
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+}
 button{
     border: 1px solid #ccc;
     background: #6F9E7B;
