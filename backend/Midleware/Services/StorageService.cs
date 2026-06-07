@@ -3,23 +3,11 @@ using backend.Domain.Contracts.Request;
 using backend.Domain.Contracts.Response;
 using backend.Domain.Models;
 using System.Text.Json;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-<<<<<<< HEAD
 using LiteDB;
-=======
->>>>>>> 270cd0194b0b492f021dcf919e115b87b8095c87
 using backend.Domain.Context;
 using backend.Domain.Models.Tables;
-using System.ComponentModel.DataAnnotations;
 using backend.Domain.Enums;
 using System.Text;
-<<<<<<< HEAD
-=======
-using LiteDB;
->>>>>>> 270cd0194b0b492f021dcf919e115b87b8095c87
 
 namespace backend.Midleware.Services
 {
