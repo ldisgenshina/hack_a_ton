@@ -2,6 +2,8 @@ using backend.Midleware.Interfaces;
 using backend.Domain.Contracts.Request;
 using backend.Domain.Contracts.Response;
 using backend.Domain.Models;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 
 namespace backend.Midleware.Interfaces
@@ -10,7 +12,7 @@ namespace backend.Midleware.Interfaces
     {
         public Task SaveCanvas(GetPostCanvasRequest request);
         public Task<GetPostCanvasRequest> SendCanvas(int canvasId);
-        public Task<List<GetPostCanvasRequest>> SendListCanvas(PlaginationMeta plagination);
-        public Task<GetPostersResponse> SendImagesToAndroid(int deviceId);
+        public Task<GetPostersResponse> SendListCanvas(PlaginationMeta plagination);
+        public Task<GetPostersAndroidResponse> SendImagesToAndroid(int deviceId);
     }
 }
