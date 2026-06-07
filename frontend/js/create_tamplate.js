@@ -1,246 +1,89 @@
+// create_tamplate.js
+
 // Получаем ссылку на DOM-элемент canvas
 const canvasElement = document.getElementById('canvas_template');
 const canvas = new fabric.Canvas('canvas_template');
 
-// 🔥 Функция обновления размеров канваса с учётом шапки
+// Функция обновления размеров канваса
 function resizeCanvas() {
     // Получаем высоту шапки
     const header = document.querySelector('header');
     const headerHeight = header ? header.offsetHeight : 0;
     
-    // Устанавливаем размеры канваса (1200x675 как ты задал)
+    // Устанавливаем размеры канваса
     canvas.setWidth(1200);
     canvas.setHeight(675);
     
-    // Центрируем канвас на странице с учётом шапки
+    // Центрируем канвас
     canvasElement.style.display = 'block';
-    canvasElement.style.margin = `${headerHeight + 20}px auto 20px auto`;
+    canvasElement.style.margin = '0 auto';
     
-    canvas.renderAll();
+    // КРИТИЧЕСКИ ВАЖНО: Обновляем offset после изменения размеров
+    setTimeout(() => {
+        canvas.calcOffset();
+        canvas.renderAll();
+    }, 50);
 }
 
-// Ждём загрузки страницы перед настройкой размеров
+// Ждём загрузки страницы
 window.addEventListener('load', () => {
     resizeCanvas();
 });
 
-window.addEventListener('resize', () => resizeCanvas());
+window.addEventListener('resize', () => {
+    resizeCanvas();
+});
 
-// ========== 1. ДОБАВЛЯЕМ ПАНЕЛЬ ИНСТРУМЕНТОВ ==========
-const toolPanel = document.createElement('div');
-toolPanel.style.position = 'fixed';
-toolPanel.style.top = '80px';  // Отступ от шапки
-toolPanel.style.right = '20px';
-toolPanel.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-toolPanel.style.padding = '15px';
-toolPanel.style.border = '1px solid #ccc';
-toolPanel.style.borderRadius = '8px';
-toolPanel.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
-toolPanel.style.zIndex = '1000';
-toolPanel.style.minWidth = '220px';
-toolPanel.style.backdropFilter = 'blur(5px)';
+// ========== ПРИВЯЗКА К ВАШИМ HTML-КНОПКАМ ==========
 
-// Заголовок панели
-const title = document.createElement('h4');
-title.textContent = '🎨 Редактор';
-title.style.margin = '0 0 10px 0';
-title.style.fontSize = '16px';
-toolPanel.appendChild(title);
-
-// ========== 2. ЗАГРУЗКА ИЗОБРАЖЕНИЙ ==========
-const imageSection = document.createElement('div');
-imageSection.style.marginBottom = '15px';
-
-const imageLabel = document.createElement('label');
-imageLabel.textContent = '📷 Загрузить изображение';
-imageLabel.style.display = 'block';
-imageLabel.style.marginBottom = '5px';
-imageLabel.style.fontWeight = 'bold';
-imageLabel.style.fontSize = '13px';
-imageSection.appendChild(imageLabel);
-
-const imageInput = document.createElement('input');
-imageInput.type = 'file';
-imageInput.accept = 'image/*';
-imageInput.style.marginBottom = '10px';
-imageInput.style.width = '100%';
-imageSection.appendChild(imageInput);
-
-// Кнопка для добавления изображения по URL
-const urlLabel = document.createElement('label');
-urlLabel.textContent = 'или URL картинки:';
-urlLabel.style.display = 'block';
-urlLabel.style.marginTop = '10px';
-urlLabel.style.marginBottom = '5px';
-urlLabel.style.fontSize = '12px';
-imageSection.appendChild(urlLabel);
-
-const urlInput = document.createElement('input');
-urlInput.type = 'text';
-urlInput.placeholder = 'https://example.com/image.jpg';
-urlInput.style.width = '100%';
-urlInput.style.marginBottom = '5px';
-urlInput.style.padding = '5px';
-urlInput.style.boxSizing = 'border-box';
-imageSection.appendChild(urlInput);
-
-const addUrlBtn = document.createElement('button');
-addUrlBtn.textContent = 'Добавить по URL';
-addUrlBtn.style.width = '100%';
-addUrlBtn.style.padding = '5px';
-addUrlBtn.style.marginBottom = '5px';
-addUrlBtn.style.cursor = 'pointer';
-addUrlBtn.style.backgroundColor = '#2196F3';
-addUrlBtn.style.color = 'white';
-addUrlBtn.style.border = 'none';
-addUrlBtn.style.borderRadius = '4px';
-imageSection.appendChild(addUrlBtn);
-
-toolPanel.appendChild(imageSection);
-
-// Обработчик загрузки файла
-imageInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+// 1. Добавление изображения
+document.getElementById('add_img').addEventListener('click', () => {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
     
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        fabric.Image.fromURL(event.target.result, (img) => {
-            const maxWidth = 400;
-            const maxHeight = 400;
-            let scale = 1;
-            
-            if (img.width > maxWidth) scale = maxWidth / img.width;
-            if (img.height * scale > maxHeight) scale = maxHeight / img.height;
-            
-            img.scale(scale);
-            img.set({
-                left: canvas.width / 2 - (img.width * scale) / 2,
-                top: canvas.height / 2 - (img.height * scale) / 2
+    fileInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            fabric.Image.fromURL(event.target.result, (img) => {
+                const maxWidth = 400;
+                const maxHeight = 400;
+                let scale = 1;
+                
+                if (img.width > maxWidth) scale = maxWidth / img.width;
+                if (img.height * scale > maxHeight) scale = maxHeight / img.height;
+                
+                img.scale(scale);
+                img.set({
+                    left: canvas.width / 2 - (img.width * scale) / 2,
+                    top: canvas.height / 2 - (img.height * scale) / 2
+                });
+                
+                canvas.add(img);
+                canvas.setActiveObject(img);
+                canvas.renderAll();
+                canvas.calcOffset();
             });
-            
-            canvas.add(img);
-            canvas.setActiveObject(img);
-            canvas.renderAll();
-        });
+        };
+        reader.readAsDataURL(file);
     };
-    reader.readAsDataURL(file);
-    imageInput.value = '';
-});
-
-// Обработчик добавления по URL
-addUrlBtn.addEventListener('click', () => {
-    const url = urlInput.value.trim();
-    if (!url) {
-        alert('Введите URL изображения');
-        return;
-    }
     
-    fabric.Image.fromURL(url, (img) => {
-        if (!img) {
-            alert('Не удалось загрузить изображение. Проверьте URL и CORS');
-            return;
-        }
-        
-        const maxWidth = 400;
-        const maxHeight = 400;
-        let scale = 1;
-        
-        if (img.width > maxWidth) scale = maxWidth / img.width;
-        if (img.height * scale > maxHeight) scale = maxHeight / img.height;
-        
-        img.scale(scale);
-        img.set({
-            left: canvas.width / 2 - (img.width * scale) / 2,
-            top: canvas.height / 2 - (img.height * scale) / 2
-        });
-        
-        canvas.add(img);
-        canvas.setActiveObject(img);
-        canvas.renderAll();
-        urlInput.value = '';
-    }, { crossOrigin: 'anonymous' });
+    fileInput.click();
 });
 
-// ========== 3. ДОБАВЛЕНИЕ ТЕКСТА ==========
-const textSection = document.createElement('div');
-textSection.style.marginBottom = '15px';
-textSection.style.borderTop = '1px solid #eee';
-textSection.style.paddingTop = '10px';
-
-const textLabel = document.createElement('label');
-textLabel.textContent = '✏️ Добавить текст';
-textLabel.style.display = 'block';
-textLabel.style.marginBottom = '10px';
-textLabel.style.fontWeight = 'bold';
-textLabel.style.fontSize = '13px';
-textSection.appendChild(textLabel);
-
-const textInput = document.createElement('input');
-textInput.type = 'text';
-textInput.placeholder = 'Введите текст...';
-textInput.style.width = '100%';
-textInput.style.marginBottom = '10px';
-textInput.style.padding = '5px';
-textInput.style.boxSizing = 'border-box';
-textSection.appendChild(textInput);
-
-// Настройки текста
-const textColorInput = document.createElement('input');
-textColorInput.type = 'color';
-textColorInput.value = '#ff0000';
-textColorInput.style.width = '40px';
-textColorInput.style.height = '30px';
-textColorInput.style.marginRight = '10px';
-textColorInput.style.verticalAlign = 'middle';
-textColorInput.style.cursor = 'pointer';
-
-const fontSizeInput = document.createElement('input');
-fontSizeInput.type = 'number';
-fontSizeInput.value = '30';
-fontSizeInput.min = '10';
-fontSizeInput.max = '200';
-fontSizeInput.style.width = '60px';
-fontSizeInput.style.padding = '5px';
-fontSizeInput.style.marginRight = '10px';
-
-const textSettingsDiv = document.createElement('div');
-textSettingsDiv.style.marginBottom = '10px';
-textSettingsDiv.style.display = 'flex';
-textSettingsDiv.style.alignItems = 'center';
-textSettingsDiv.style.gap = '5px';
-textSettingsDiv.innerHTML = '<span style="font-size:12px">Цвет:</span>';
-textSettingsDiv.appendChild(textColorInput);
-textSettingsDiv.innerHTML += '<span style="font-size:12px">Размер:</span>';
-textSettingsDiv.appendChild(fontSizeInput);
-textSection.appendChild(textSettingsDiv);
-
-const addTextBtn = document.createElement('button');
-addTextBtn.textContent = '➕ Добавить текст';
-addTextBtn.style.width = '100%';
-addTextBtn.style.padding = '8px';
-addTextBtn.style.cursor = 'pointer';
-addTextBtn.style.backgroundColor = '#4CAF50';
-addTextBtn.style.color = 'white';
-addTextBtn.style.border = 'none';
-addTextBtn.style.borderRadius = '4px';
-addTextBtn.style.fontSize = '14px';
-textSection.appendChild(addTextBtn);
-
-toolPanel.appendChild(textSection);
-
-// Обработчик добавления текста
-addTextBtn.addEventListener('click', () => {
-    let textContent = textInput.value.trim();
-    if (!textContent) {
-        textContent = 'Новый текст';
-    }
+// 2. Добавление текста
+document.getElementById('add_text').addEventListener('click', () => {
+    const textContent = prompt('Введите текст:', 'Новый текст');
+    if (!textContent) return;
     
     const newText = new fabric.IText(textContent, {
         left: canvas.width / 2 - 100,
         top: canvas.height / 2 - 20,
-        fontSize: parseInt(fontSizeInput.value),
-        fill: textColorInput.value,
+        fontSize: 30,
+        fill: '#000000',
         fontFamily: 'Arial',
         editable: true
     });
@@ -248,181 +91,246 @@ addTextBtn.addEventListener('click', () => {
     canvas.add(newText);
     canvas.setActiveObject(newText);
     canvas.renderAll();
-    textInput.value = '';
-    
-    console.log('Текст добавлен, цвет:', textColorInput.value);
+    canvas.calcOffset();
 });
 
-// ========== 4. УПРАВЛЕНИЕ СЛОЯМИ ==========
-const layerSection = document.createElement('div');
-layerSection.style.borderTop = '1px solid #eee';
-layerSection.style.paddingTop = '10px';
-layerSection.style.marginTop = '5px';
-
-const layerLabel = document.createElement('label');
-layerLabel.textContent = '📚 Управление слоями';
-layerLabel.style.display = 'block';
-layerLabel.style.marginBottom = '10px';
-layerLabel.style.fontWeight = 'bold';
-layerLabel.style.fontSize = '13px';
-layerSection.appendChild(layerLabel);
-
-const toBottomBtn = document.createElement('button');
-toBottomBtn.textContent = '⬇️ На задний план';
-toBottomBtn.style.width = '100%';
-toBottomBtn.style.padding = '8px';
-toBottomBtn.style.marginBottom = '5px';
-toBottomBtn.style.cursor = 'pointer';
-toBottomBtn.style.backgroundColor = '#ff9800';
-toBottomBtn.style.color = 'white';
-toBottomBtn.style.border = 'none';
-toBottomBtn.style.borderRadius = '4px';
-toBottomBtn.onclick = (e) => {
-    e.stopPropagation();
+// 3. Управление слоями - ВЫШЕ
+document.getElementById('up_layer').addEventListener('click', () => {
     const activeObject = canvas.getActiveObject();
+    const objects = canvas.getObjects();
+    
     if (activeObject) {
-        canvas.sendToBack(activeObject);
+        if (objects.indexOf(activeObject) < objects.length - 1) {
+            canvas.bringForward(activeObject);
+        }
         canvas.renderAll();
-        console.log('Объект отправлен на задний план');
+        console.log('Слой изменен, текущая позиция:', objects.indexOf(activeObject));
     } else {
-        alert('Сначала выдели объект (кликни на картинку или текст)');
+        alert('Сначала выделите объект (кликните на текст или картинку)');
     }
-};
+});
 
-const toTopBtn = document.createElement('button');
-toTopBtn.textContent = '⬆️ На передний план';
-toTopBtn.style.width = '100%';
-toTopBtn.style.padding = '8px';
-toTopBtn.style.marginBottom = '5px';
-toTopBtn.style.cursor = 'pointer';
-toTopBtn.style.backgroundColor = '#ff9800';
-toTopBtn.style.color = 'white';
-toTopBtn.style.border = 'none';
-toTopBtn.style.borderRadius = '4px';
-toTopBtn.onclick = (e) => {
-    e.stopPropagation();
+// 4. Управление слоями - НИЖЕ
+document.getElementById('down_layer').addEventListener('click', () => {
     const activeObject = canvas.getActiveObject();
+    const objects = canvas.getObjects();
+    
     if (activeObject) {
-        canvas.bringToFront(activeObject);
+        if (objects.indexOf(activeObject) > 0) {
+            canvas.sendBackwards(activeObject);
+        }
         canvas.renderAll();
-        console.log('Объект выведен на передний план');
+        console.log('Слой изменен, текущая позиция:', objects.indexOf(activeObject));
     } else {
-        alert('Сначала выдели объект (кликни на картинку или текст)');
+        alert('Сначала выделите объект (кликните на текст или картинку)');
     }
-};
+});
 
-const deleteBtn = document.createElement('button');
-deleteBtn.textContent = '🗑️ Удалить объект';
-deleteBtn.style.width = '100%';
-deleteBtn.style.padding = '8px';
-deleteBtn.style.cursor = 'pointer';
-deleteBtn.style.backgroundColor = '#f44336';
-deleteBtn.style.color = 'white';
-deleteBtn.style.border = 'none';
-deleteBtn.style.borderRadius = '4px';
-deleteBtn.onclick = (e) => {
-    e.stopPropagation();
+// 5. Удаление элемента
+document.getElementById('delete_element').addEventListener('click', () => {
     const activeObject = canvas.getActiveObject();
     if (activeObject) {
         canvas.remove(activeObject);
         canvas.renderAll();
-        console.log('Объект удалён');
+        canvas.calcOffset();
     } else {
-        alert('Сначала выдели объект для удаления');
+        alert('Сначала выделите объект для удаления');
     }
-};
+});
 
-layerSection.appendChild(toBottomBtn);
-layerSection.appendChild(toTopBtn);
-layerSection.appendChild(deleteBtn);
-toolPanel.appendChild(layerSection);
+// ========== 6. СОХРАНЕНИЕ МАКЕТА (ОТПРАВКА НА СЕРВЕР) ==========
 
-// ========== 5. ЭКСПОРТ ==========
-const exportSection = document.createElement('div');
-exportSection.style.borderTop = '1px solid #eee';
-exportSection.style.paddingTop = '10px';
-exportSection.style.marginTop = '5px';
+// Создаём экземпляр экспортера
+const exporter = new CanvasExporter(canvas, {
+    // Замени URL на адрес твоего сервера
+    apiEndpoint: 'http://localhost:3000/api/save-template',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
 
-const exportBtn = document.createElement('button');
-exportBtn.textContent = '💾 Скачать как PNG';
-exportBtn.style.width = '100%';
-exportBtn.style.padding = '8px';
-exportBtn.style.cursor = 'pointer';
-exportBtn.style.backgroundColor = '#9C27B0';
-exportBtn.style.color = 'white';
-exportBtn.style.border = 'none';
-exportBtn.style.borderRadius = '4px';
-exportBtn.style.fontSize = '14px';
-exportBtn.onclick = () => {
-    const dataURL = canvas.toDataURL({
-        format: 'png',
-        quality: 1
+// Обработчик кнопки "Сохранить макет"
+document.getElementById('save_layout').addEventListener('click', async () => {
+    // Проверяем, есть ли что сохранять
+    const objects = canvas.getObjects();
+    
+    // Фильтруем тестовые объекты (если нужно)
+    const userObjects = objects.filter(obj => {
+        // Исключаем фоновый прямоугольник (если он есть)
+        if (obj.fill === '#D6D6D6' && obj.width === canvas.width && obj.height === canvas.height) {
+            return false;
+        }
+        return true;
     });
-    const link = document.createElement('a');
-    link.download = `template-${Date.now()}.png`;
-    link.href = dataURL;
-    link.click();
-};
-exportSection.appendChild(exportBtn);
-toolPanel.appendChild(exportSection);
+    
+    if (userObjects.length === 0) {
+        alert('На канвасе нет объектов для сохранения. Добавьте изображение или текст.');
+        return;
+    }
+    
+    // Запрашиваем название шаблона
+    const templateName = prompt('Введите название макета:', `template_${Date.now()}`);
+    if (!templateName) {
+        return; // Пользователь отменил
+    }
+    
+    // Блокируем кнопку на время отправки
+    const saveBtn = document.getElementById('save_layout');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = '⏳ Сохранение...';
+    saveBtn.disabled = true;
+    
+    try {
+        // Отправляем на сервер
+        const result = await exporter.sendToServer({
+            template_name: templateName,
+            author: 'User',
+            created_at: new Date().toISOString(),
+            canvas_width: canvas.width,
+            canvas_height: canvas.height
+        });
+        
+        alert(`✅ Макет "${templateName}" успешно сохранён!`);
+        console.log('Ответ сервера:', result);
+        
+    } catch (error) {
+        console.error('Ошибка при сохранении:', error);
+        
+        // Детальная диагностика ошибки
+        let errorMessage = 'Ошибка при сохранении макета: ';
+        
+        if (error.message.includes('Failed to fetch')) {
+            errorMessage += 'Сервер недоступен. Проверьте адрес сервера и CORS.';
+        } else if (error.message.includes('HTTP error')) {
+            errorMessage += `Сервер вернул ошибку: ${error.message}`;
+        } else {
+            errorMessage += error.message;
+        }
+        
+        alert(errorMessage);
+        
+        // Показываем в консоли данные для отладки
+        console.log('Данные для отладки:');
+        try {
+            const payload = await exporter.prepareJSONPayload();
+            console.log('Размер JSON:', JSON.stringify(payload.json_data).length, 'байт');
+            console.log('Размер PNG:', payload.png_size, 'байт');
+        } catch (debugError) {
+            console.error('Ошибка при подготовке данных:', debugError);
+        }
+        
+    } finally {
+        // Разблокируем кнопку
+        saveBtn.textContent = originalText;
+        saveBtn.disabled = false;
+    }
+});
 
-// Добавляем панель на страницу
-document.body.appendChild(toolPanel);
+// ========== ИСПРАВЛЕНИЕ ПРОБЛЕМЫ СО СМЕЩЕНИЕМ ==========
 
-// Добавляем стили для canvas и кнопок
-const style = document.createElement('style');
-style.textContent = `
+// Принудительно обновляем offset после каждого действия с мышью
+canvas.on('mouse:down', (e) => {
+    canvas.calcOffset();
+});
+
+canvas.on('mouse:move', (e) => {
+    if (canvas._activeObject) {
+        canvas.calcOffset();
+    }
+});
+
+canvas.on('object:moving', () => {
+    canvas.calcOffset();
+});
+
+canvas.on('object:scaling', () => {
+    canvas.calcOffset();
+});
+
+canvas.on('object:rotating', () => {
+    canvas.calcOffset();
+});
+
+canvas.on('selection:created', () => {
+    canvas.calcOffset();
+});
+
+canvas.on('selection:updated', () => {
+    canvas.calcOffset();
+});
+
+// ResizeObserver для отслеживания изменения размера контейнера
+let resizeObserver = null;
+if (window.ResizeObserver) {
+    resizeObserver = new ResizeObserver(() => {
+        canvas.calcOffset();
+    });
+    resizeObserver.observe(canvasElement);
+}
+
+// ========== ДОБАВЛЯЕМ КРИТИЧЕСКИ ВАЖНЫЕ СТИЛИ ==========
+const fixStyle = document.createElement('style');
+fixStyle.textContent = `
+    .canvas-container {
+        margin: 0 auto !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+        position: relative !important;
+    }
+    
+    .upper-canvas {
+        cursor: crosshair !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+    
     #canvas_template {
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        background: white;
-        cursor: crosshair;
-    }
-    
-    button {
-        transition: all 0.2s ease;
-        font-family: inherit;
-    }
-    
-    button:hover {
-        opacity: 0.85;
-        transform: translateY(-1px);
-    }
-    
-    button:active {
-        transform: translateY(0);
-    }
-    
-    .menu button {
-        background-color: #4CAF50;
-        color: white;
-        padding: 8px 16px;
-        margin: 0 5px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    .menu button:hover {
-        background-color: #45a049;
+        transform: none !important;
+        position: relative !important;
     }
 `;
-document.head.appendChild(style);
+document.head.appendChild(fixStyle);
 
-// Добавляем тестовый объект для проверки
+// ========== ДОБАВЛЯЕМ ТЕСТОВЫЕ ОБЪЕКТЫ ==========
 setTimeout(() => {
-    const testText = new fabric.IText('✨ Кликни на меня и нажми кнопки слоёв ✨', {
-        left: 50,
-        top: 50,
-        fontSize: 18,
+    const background = new fabric.Rect({
+        left: 0,
+        top: 0,
+        width: canvas.width,
+        height: canvas.height,
+        fill: '#D6D6D6',
+        selectable: false,
+        evented: false
+    });
+    
+    const testText1 = new fabric.IText('📦 Объект 1 (нажми на меня)', {
+        left: 100,
+        top: 100,
+        fontSize: 24,
         fill: '#333',
         fontFamily: 'Arial',
-        backgroundColor: '#f0f0f0',
-        padding: 5
+        backgroundColor: 'rgba(255,255,0,0.3)',
+        padding: 10
     });
-    canvas.add(testText);
+    
+    const testText2 = new fabric.IText('🎨 Объект 2 (нажми на меня)', {
+        left: 100,
+        top: 200,
+        fontSize: 24,
+        fill: '#333',
+        fontFamily: 'Arial',
+        backgroundColor: 'rgba(0,255,0,0.3)',
+        padding: 10
+    });
+    
+    canvas.add(background);
+    canvas.add(testText1);
+    canvas.add(testText2);
     canvas.renderAll();
-    console.log('Канвас готов! Все функции должны работать.');
-    console.log('Fabric.js версия:', fabric.version);
-}, 1000);
+    canvas.calcOffset();
+    
+    console.log('✅ Канвас готов!');
+    console.log('💡 Нажмите "Сохранить макет" для отправки на сервер');
+}, 500);
